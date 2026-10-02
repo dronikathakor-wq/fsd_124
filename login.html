@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – KBT College of Engineering</title>
+    <!-- Same Google Font as index.html -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <!-- Main site stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Login-specific styles (scoped so they never touch index.html) -->
+    <style>
+        /* ─── Page shell ───────────────────────────────────────────── */
+        .auth-page-body {
+            min-height: 100vh;
+            background: linear-gradient(150deg, #e8f0fe 0%, #dceeff 50%, #eef4ff 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ─── Mini header (matches site branding) ───────────────────── */
+        .auth-header {
+            background: linear-gradient(135deg, #003366, #0066cc);
+            color: white;
+            padding: 18px 32px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .auth-header .auth-logo-text h1 {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0;
+        }
+        .auth-header .auth-logo-text p {
+            font-size: 12px;
+            opacity: 0.85;
+            margin: 2px 0 0;
+            letter-spacing: 0;
+        }
+
+        /* ─── Nav bar (same style as index.html) ────────────────────── */
+        .auth-nav {
+            background: #004080;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 10px 20px;
+            gap: 0;
+        }
+        .auth-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 6px 18px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: color 0.25s;
+        }
+        .auth-nav a:hover,
+        .auth-nav a.active {
+            color: #FFD700;
+        }
+
+        /* ─── Card centering wrapper ─────────────────────────────────── */
+        .auth-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 20px;
+        }
+
+        /* ─── Login card ─────────────────────────────────────────────── */
+        .auth-card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 8px 40px rgba(0, 51, 102, 0.13);
+            width: 100%;
+            max-width: 440px;
+            padding: 44px 44px 36px;
+            animation: cardIn 0.45s cubic-bezier(.22,.68,0,1.2) both;
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(28px) scale(.97); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        /* ─── Card header ────────────────────────────────────────────── */
+        .auth-card-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #003366, #0066cc);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+        }
+        .auth-card h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #002244;
+            margin: 0 0 6px;
+        }
+        .auth-card .auth-subtitle {
+            font-size: 14px;
+            color: #5a7299;
+            margin: 0 0 30px;
+        }
+
+        /* ─── Form groups ────────────────────────────────────────────── */
+        .auth-form-group {
+            margin-bottom: 20px;
+        }
+        .auth-form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2c3e70;
+            margin-bottom: 7px;
+        }
+        .auth-input-wrap {
+            position: relative;
+        }
+        .auth-input-wrap .auth-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 17px;
+            color: #7a99c2;
+            pointer-events: none;
+            line-height: 1;
+        }
+        .auth-input-wrap input {
+            width: 100%;
+            padding: 12px 44px 12px 42px;
+            border: 1.5px solid #d0ddf0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            color: #1a2a4a;
+            background: #f7faff;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .auth-input-wrap input:focus {
+            border-color: #0066cc;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.12);
+        }
+        .auth-input-wrap input.input-error {
+            border-color: #e53935;
+            box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.1);
+        }
+        .auth-input-wrap input.input-success {
+            border-color: #2ecc71;
+        }
+
+        /* Toggle password eye button */
+        .auth-toggle-pw {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #7a99c2;
+            font-size: 18px;
+            padding: 4px;
+            margin: 0;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .auth-toggle-pw:hover {
+            color: #0066cc;
+            background: none;
+            transform: translateY(-50%) scale(1);
+        }
+
+        /* Error / success messages under fields */
+        .auth-field-msg {
+            font-size: 12px;
+            margin-top: 5px;
+            min-height: 16px;
+            display: block;
+        }
+        .auth-field-msg.err  { color: #c62828; }
+        .auth-field-msg.ok   { color: #1b7c3e; }
+
+        /* ─── Forgot password row ────────────────────────────────────── */
+        .auth-row-forgot {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+        .auth-row-forgot a {
+            font-size: 12.5px;
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .auth-row-forgot a:hover { text-decoration: underline; }
+
+        /* ─── Submit button ──────────────────────────────────────────── */
+        .auth-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #003f8a, #0066cc);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.18s, box-shadow 0.25s;
+            box-shadow: 0 4px 14px rgba(0, 102, 204, 0.28);
+            margin-top: 4px;
+        }
+        .auth-btn:hover {
+            background: linear-gradient(135deg, #002b6e, #0055aa);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.36);
+        }
+        .auth-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ─── Global form message (success / error banner) ───────────── */
+        .auth-msg {
+            text-align: center;
+            font-size: 13.5px;
+            font-weight: 500;
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            display: none;
+        }
+        .auth-msg.show-err {
+            display: block;
+            background: #fdecea;
+            color: #c62828;
+            border: 1px solid #f8c4c3;
+        }
+        .auth-msg.show-ok {
+            display: block;
+            background: #e6f7ef;
+            color: #1b7c3e;
+            border: 1px solid #b2dfca;
+        }
+
+        /* ─── Divider ────────────────────────────────────────────────── */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 24px 0 18px;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #d8e6f8;
+        }
+        .auth-divider span {
+            font-size: 12px;
+            color: #8eaac8;
+            white-space: nowrap;
+        }
+
+        /* ─── Register link row ──────────────────────────────────────── */
+        .auth-switch {
+            text-align: center;
+            font-size: 14px;
+            color: #5a7299;
+        }
+        .auth-switch a {
+            color: #0066cc;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .auth-switch a:hover { text-decoration: underline; }
+
+        /* ─── Footer ─────────────────────────────────────────────────── */
+        .auth-footer {
+            background: #003366;
+            color: #c5d9f5;
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 14px;
+        }
+        .auth-footer a {
+            color: #7fb6f5;
+            text-decoration: none;
+        }
+        .auth-footer a:hover { text-decoration: underline; }
+
+        /* ─── Responsive ─────────────────────────────────────────────── */
+        @media (max-width: 520px) {
+            .auth-card { padding: 32px 22px 26px; }
+            .auth-card h2 { font-size: 24px; }
+            .auth-header .auth-logo-text h1 { font-size: 15px; }
+        }
+    </style>
+</head>
+
+<body class="auth-page-body">
+
+    <!-- ── Mini site header ─────────────────────────────────────────── -->
+    <header class="auth-header">
+        <div class="auth-logo-text">
+            <h1>Maratha Vidya Prasarak Samaj's</h1>
+            <p>Karmaveer Adv. Baburao Ganpatrao Thakare College of Engineering, Nashik</p>
+        </div>
+    </header>
+
+    <!-- ── Navigation bar (mirrors index.html nav) ──────────────────── -->
+    <nav class="auth-nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#courses">Courses</a>
+        <a href="index.html#admission">Admission</a>
+        <a href="index.html#facilities">Campus Facilities</a>
+        <a href="index.html#placement">Training &amp; Placement</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="login.html" class="active">Login</a>
+        <a href="registration.html">Register</a>
+    </nav>
+
+    <!-- ── Centered login card ──────────────────────────────────────── -->
+    <main class="auth-main">
+        <div class="auth-card">
+
+            <span class="auth-card-badge">Student Portal</span>
+            <h2>Welcome Back</h2>
+            <p class="auth-subtitle">Sign in to access your KBT College account</p>
+
+            <form id="loginForm" novalidate>
+
+                <!-- Email field -->
+                <div class="auth-form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-icon">✉</span>
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                        >
+                    </div>
+                    <span class="auth-field-msg" id="loginEmailMsg"></span>
+                </div>
+
+                <!-- Password field -->
+                <div class="auth-form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-icon">🔒</span>
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                        >
+                        <button
+                            type="button"
+                            class="auth-toggle-pw"
+                            id="loginTogglePw"
+                            aria-label="Show password"
+                        >👁</button>
+                    </div>
+                    <span class="auth-field-msg" id="loginPasswordMsg"></span>
+                </div>
+
+                <!-- Forgot password -->
+                <div class="auth-row-forgot">
+                    <a href="#" onclick="alert('Password reset is not yet configured. Please contact admin@kbt.edu.in'); return false;">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="auth-btn" id="loginSubmitBtn">Sign In</button>
+
+                <!-- Global message -->
+                <p class="auth-msg" id="loginGlobalMsg"></p>
+
+            </form>
+
+            <!-- Divider -->
+            <div class="auth-divider"><span>New to KBT Portal?</span></div>
+
+            <!-- Switch to register -->
+            <p class="auth-switch">
+                Don't have an account? <a href="registration.html">Create one here</a>
+            </p>
+
+        </div>
+    </main>
+
+    <!-- ── Footer ───────────────────────────────────────────────────── -->
+    <footer class="auth-footer">
+        &copy; 2026 KBT College of Engineering, Nashik. All Rights Reserved. &nbsp;|&nbsp;
+        <a href="index.html">Back to Main Site</a>
+    </footer>
+
+    <!-- ── Scripts ──────────────────────────────────────────────────── -->
+    <script>
+        /* ── Helpers ──────────────────────────────────────────────── */
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function setFieldState(inputEl, msgEl, message, isError) {
+            inputEl.classList.toggle('input-error',   isError);
+            inputEl.classList.toggle('input-success', !isError && message === '');
+            msgEl.textContent = message;
+            msgEl.className   = 'auth-field-msg ' + (isError ? 'err' : 'ok');
+        }
+
+        function showGlobalMsg(el, message, isError) {
+            el.textContent = message;
+            el.className   = 'auth-msg ' + (isError ? 'show-err' : 'show-ok');
+        }
+
+        /* ── Show / hide password toggle ──────────────────────────── */
+        const loginPwInput = document.getElementById('loginPassword');
+        document.getElementById('loginTogglePw').addEventListener('click', function () {
+            const isHidden = loginPwInput.type === 'password';
+            loginPwInput.type   = isHidden ? 'text' : 'password';
+            this.textContent    = isHidden ? '🙈' : '👁';
+            this.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+        });
+
+        /* ── Inline validation on blur ────────────────────────────── */
+        const loginEmailInput = document.getElementById('loginEmail');
+        const loginEmailMsg   = document.getElementById('loginEmailMsg');
+        const loginPwMsg      = document.getElementById('loginPasswordMsg');
+
+        loginEmailInput.addEventListener('blur', function () {
+            if (this.value.trim() === '') {
+                setFieldState(this, loginEmailMsg, 'Email is required.', true);
+            } else if (!validateEmail(this.value.trim())) {
+                setFieldState(this, loginEmailMsg, 'Please enter a valid email address.', true);
+            } else {
+                setFieldState(this, loginEmailMsg, '', false);
+            }
+        });
+
+        loginPwInput.addEventListener('blur', function () {
+            if (this.value === '') {
+                setFieldState(this, loginPwMsg, 'Password is required.', true);
+            } else {
+                setFieldState(this, loginPwMsg, '', false);
+            }
+        });
+
+        /* ── Form submit ──────────────────────────────────────────── */
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const emailVal = loginEmailInput.value.trim();
+            const pwVal    = loginPwInput.value;
+            const globalMsg = document.getElementById('loginGlobalMsg');
+            let valid = true;
+
+            // Validate email
+            if (emailVal === '') {
+                setFieldState(loginEmailInput, loginEmailMsg, 'Email is required.', true);
+                valid = false;
+            } else if (!validateEmail(emailVal)) {
+                setFieldState(loginEmailInput, loginEmailMsg, 'Please enter a valid email address.', true);
+                valid = false;
+            } else {
+                setFieldState(loginEmailInput, loginEmailMsg, '', false);
+            }
+
+            // Validate password
+            if (pwVal === '') {
+                setFieldState(loginPwInput, loginPwMsg, 'Password is required.', true);
+                valid = false;
+            } else {
+                setFieldState(loginPwInput, loginPwMsg, '', false);
+            }
+
+            if (!valid) {
+                showGlobalMsg(globalMsg, '⚠ Please fix the errors above and try again.', true);
+                return;
+            }
+
+            /* Simulate login success (replace with real auth logic) */
+            const btn = document.getElementById('loginSubmitBtn');
+            btn.textContent = 'Signing in…';
+            btn.disabled    = true;
+
+            setTimeout(function () {
+                showGlobalMsg(globalMsg, '✓ Login successful! Redirecting to home…', false);
+                setTimeout(function () {
+                    window.location.href = 'index.html';
+                }, 1400);
+            }, 900);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register – KBT College of Engineering</title>
+    <!-- Same Google Font as index.html -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <!-- Main site stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Registration-specific styles -->
+    <style>
+        /* ─── Page shell ───────────────────────────────────────────── */
+        .auth-page-body {
+            min-height: 100vh;
+            background: linear-gradient(150deg, #e8f0fe 0%, #dceeff 50%, #eef4ff 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ─── Mini header ────────────────────────────────────────────── */
+        .auth-header {
+            background: linear-gradient(135deg, #003366, #0066cc);
+            color: white;
+            padding: 18px 32px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .auth-header .auth-logo-text h1 {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0;
+        }
+        .auth-header .auth-logo-text p {
+            font-size: 12px;
+            opacity: 0.85;
+            margin: 2px 0 0;
+            letter-spacing: 0;
+        }
+
+        /* ─── Nav bar ────────────────────────────────────────────────── */
+        .auth-nav {
+            background: #004080;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 10px 20px;
+        }
+        .auth-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 6px 18px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: color 0.25s;
+        }
+        .auth-nav a:hover,
+        .auth-nav a.active {
+            color: #FFD700;
+        }
+
+        /* ─── Card centering wrapper ─────────────────────────────────── */
+        .auth-main {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 48px 20px;
+        }
+
+        /* ─── Card ───────────────────────────────────────────────────── */
+        .auth-card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 8px 40px rgba(0, 51, 102, 0.13);
+            width: 100%;
+            max-width: 500px;
+            padding: 44px 44px 36px;
+            animation: cardIn 0.45s cubic-bezier(.22,.68,0,1.2) both;
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(28px) scale(.97); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        /* ─── Card header ────────────────────────────────────────────── */
+        .auth-card-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #003366, #0066cc);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+        }
+        .auth-card h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #002244;
+            margin: 0 0 6px;
+        }
+        .auth-card .auth-subtitle {
+            font-size: 14px;
+            color: #5a7299;
+            margin: 0 0 28px;
+        }
+
+        /* ─── Two-column layout for name + username on wide screens ──── */
+        .auth-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 520px) {
+            .auth-row-2 { grid-template-columns: 1fr; }
+        }
+
+        /* ─── Form groups ────────────────────────────────────────────── */
+        .auth-form-group {
+            margin-bottom: 18px;
+        }
+        .auth-form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2c3e70;
+            margin-bottom: 7px;
+        }
+        .auth-input-wrap {
+            position: relative;
+        }
+        .auth-input-wrap .auth-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 17px;
+            color: #7a99c2;
+            pointer-events: none;
+            line-height: 1;
+        }
+        .auth-input-wrap input,
+        .auth-input-wrap select {
+            width: 100%;
+            padding: 12px 44px 12px 42px;
+            border: 1.5px solid #d0ddf0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            color: #1a2a4a;
+            background: #f7faff;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .auth-input-wrap select {
+            appearance: none;
+            padding-right: 36px;
+        }
+        .auth-input-wrap input:focus,
+        .auth-input-wrap select:focus {
+            border-color: #0066cc;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.12);
+        }
+        .auth-input-wrap input.input-error,
+        .auth-input-wrap select.input-error {
+            border-color: #e53935;
+            box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.1);
+        }
+        .auth-input-wrap input.input-success,
+        .auth-input-wrap select.input-success {
+            border-color: #2ecc71;
+        }
+
+        /* Select chevron icon */
+        .auth-select-chevron {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #7a99c2;
+            font-size: 14px;
+        }
+
+        /* Toggle password eye */
+        .auth-toggle-pw {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #7a99c2;
+            font-size: 18px;
+            padding: 4px;
+            margin: 0;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .auth-toggle-pw:hover {
+            color: #0066cc;
+            background: none;
+            transform: translateY(-50%) scale(1);
+        }
+
+        /* Error / success messages */
+        .auth-field-msg {
+            font-size: 12px;
+            margin-top: 5px;
+            min-height: 16px;
+            display: block;
+        }
+        .auth-field-msg.err { color: #c62828; }
+        .auth-field-msg.ok  { color: #1b7c3e; }
+
+        /* ─── Password strength meter ────────────────────────────────── */
+        .pw-strength-wrap {
+            margin-top: 8px;
+        }
+        .pw-strength-bar {
+            height: 4px;
+            border-radius: 4px;
+            background: #e0e9f8;
+            overflow: hidden;
+        }
+        .pw-strength-fill {
+            height: 100%;
+            border-radius: 4px;
+            width: 0;
+            transition: width 0.35s ease, background 0.35s ease;
+        }
+        .pw-strength-label {
+            font-size: 11.5px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ─── Submit button ──────────────────────────────────────────── */
+        .auth-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #003f8a, #0066cc);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.18s, box-shadow 0.25s;
+            box-shadow: 0 4px 14px rgba(0, 102, 204, 0.28);
+            margin-top: 6px;
+        }
+        .auth-btn:hover {
+            background: linear-gradient(135deg, #002b6e, #0055aa);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.36);
+        }
+        .auth-btn:active { transform: translateY(0); }
+
+        /* ─── Global form message ────────────────────────────────────── */
+        .auth-msg {
+            text-align: center;
+            font-size: 13.5px;
+            font-weight: 500;
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            display: none;
+        }
+        .auth-msg.show-err {
+            display: block;
+            background: #fdecea;
+            color: #c62828;
+            border: 1px solid #f8c4c3;
+        }
+        .auth-msg.show-ok {
+            display: block;
+            background: #e6f7ef;
+            color: #1b7c3e;
+            border: 1px solid #b2dfca;
+        }
+
+        /* ─── Divider ────────────────────────────────────────────────── */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 24px 0 18px;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #d8e6f8;
+        }
+        .auth-divider span {
+            font-size: 12px;
+            color: #8eaac8;
+            white-space: nowrap;
+        }
+
+        /* ─── Switch row ─────────────────────────────────────────────── */
+        .auth-switch {
+            text-align: center;
+            font-size: 14px;
+            color: #5a7299;
+        }
+        .auth-switch a {
+            color: #0066cc;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .auth-switch a:hover { text-decoration: underline; }
+
+        /* ─── Footer ─────────────────────────────────────────────────── */
+        .auth-footer {
+            background: #003366;
+            color: #c5d9f5;
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 14px;
+        }
+        .auth-footer a {
+            color: #7fb6f5;
+            text-decoration: none;
+        }
+        .auth-footer a:hover { text-decoration: underline; }
+
+        /* ─── Responsive ─────────────────────────────────────────────── */
+        @media (max-width: 520px) {
+            .auth-card { padding: 32px 22px 26px; }
+            .auth-card h2 { font-size: 24px; }
+        }
+    </style>
+</head>
+
+<body class="auth-page-body">
+
+    <!-- ── Mini site header ─────────────────────────────────────────── -->
+    <header class="auth-header">
+        <div class="auth-logo-text">
+            <h1>Maratha Vidya Prasarak Samaj's</h1>
+            <p>Karmaveer Adv. Baburao Ganpatrao Thakare College of Engineering, Nashik</p>
+        </div>
+    </header>
+
+    <!-- ── Navigation bar ───────────────────────────────────────────── -->
+    <nav class="auth-nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#courses">Courses</a>
+        <a href="index.html#admission">Admission</a>
+        <a href="index.html#facilities">Campus Facilities</a>
+        <a href="index.html#placement">Training &amp; Placement</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="login.html">Login</a>
+        <a href="registration.html" class="active">Register</a>
+    </nav>
+
+    <!-- ── Registration card ────────────────────────────────────────── -->
+    <main class="auth-main">
+        <div class="auth-card">
+
+            <span class="auth-card-badge">Student Portal</span>
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Join the KBT College portal — it takes less than a minute</p>
+
+            <form id="registerForm" novalidate>
+
+                <!-- Full name + Username row -->
+                <div class="auth-row-2">
+                    <div class="auth-form-group">
+                        <label for="regName">Full Name</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-icon">👤</span>
+                            <input
+                                type="text"
+                                id="regName"
+                                placeholder="e.g. Pratik Sharma"
+                                autocomplete="name"
+                            >
+                        </div>
+                        <span class="auth-field-msg" id="regNameMsg"></span>
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label for="regUsername">Username</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-icon">🏷</span>
+                            <input
+                                type="text"
+                                id="regUsername"
+                                placeholder="e.g. pratik21"
+                                autocomplete="username"
+                            >
+                        </div>
+                        <span class="auth-field-msg" id="regUsernameMsg"></span>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="auth-form-group">
+                    <label for="regEmail">Email Address</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-icon">✉</span>
+                        <input
+                            type="email"
+                            id="regEmail"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                        >
+                    </div>
+                    <span class="auth-field-msg" id="regEmailMsg"></span>
+                </div>
+
+                <!-- Course / Department -->
+                <div class="auth-form-group">
+                    <label for="regCourse">Course / Branch</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-icon">🎓</span>
+                        <select id="regCourse">
+                            <option value="">-- Select your course --</option>
+                            <option value="CE">Computer Engineering</option>
+                            <option value="IT">Information Technology</option>
+                            <option value="AIDS">Artificial Intelligence &amp; Data Science</option>
+                            <option value="ENTC">Electronics &amp; Telecommunication</option>
+                            <option value="IC">Instrumentation &amp; Control Engineering</option>
+                            <option value="EE">Electrical Engineering</option>
+                            <option value="ME">Mechanical Engineering</option>
+                            <option value="CivilE">Civil Engineering</option>
+                        </select>
+                        <span class="auth-select-chevron">▾</span>
+                    </div>
+                    <span class="auth-field-msg" id="regCourseMsg"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="auth-form-group">
+                    <label for="regPassword">Password</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-icon">🔒</span>
+                        <input
+                            type="password"
+                            id="regPassword"
+                            placeholder="Min 8 chars, uppercase, number, symbol"
+                            autocomplete="new-password"
+                        >
+                        <button
+                            type="button"
+                            class="auth-toggle-pw"
+                            id="regTogglePw"
+                            aria-label="Show password"
+                        >👁</button>
+                    </div>
+                    <!-- Password strength meter -->
+                    <div class="pw-strength-wrap">
+                        <div class="pw-strength-bar">
+                            <div class="pw-strength-fill" id="pwStrengthFill"></div>
+                        </div>
+                        <span class="pw-strength-label" id="pwStrengthLabel" style="color:#8eaac8;"></span>
+                    </div>
+                    <span class="auth-field-msg" id="regPasswordMsg"></span>
+                </div>
+
+                <!-- Confirm password -->
+                <div class="auth-form-group">
+                    <label for="regConfirmPassword">Confirm Password</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-icon">🔒</span>
+                        <input
+                            type="password"
+                            id="regConfirmPassword"
+                            placeholder="Re-enter your password"
+                            autocomplete="new-password"
+                        >
+                        <button
+                            type="button"
+                            class="auth-toggle-pw"
+                            id="regToggleConfirmPw"
+                            aria-label="Show confirm password"
+                        >👁</button>
+                    </div>
+                    <span class="auth-field-msg" id="regConfirmPasswordMsg"></span>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="auth-btn" id="regSubmitBtn">Create Account</button>
+
+                <!-- Global message -->
+                <p class="auth-msg" id="regGlobalMsg"></p>
+
+            </form>
+
+            <!-- Divider -->
+            <div class="auth-divider"><span>Already registered?</span></div>
+
+            <!-- Switch to login -->
+            <p class="auth-switch">
+                Already have an account? <a href="login.html">Sign in here</a>
+            </p>
+
+        </div>
+    </main>
+
+    <!-- ── Footer ───────────────────────────────────────────────────── -->
+    <footer class="auth-footer">
+        &copy; 2026 KBT College of Engineering, Nashik. All Rights Reserved. &nbsp;|&nbsp;
+        <a href="index.html">Back to Main Site</a>
+    </footer>
+
+    <!-- ── Scripts ──────────────────────────────────────────────────── -->
+    <script>
+        /* ── Helpers ──────────────────────────────────────────────── */
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function validatePasswordStrong(password) {
+            return password.length >= 8 &&
+                /[A-Z]/.test(password) &&
+                /[a-z]/.test(password) &&
+                /[0-9]/.test(password) &&
+                /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
+        }
+
+        function setFieldState(inputEl, msgEl, message, isError) {
+            inputEl.classList.toggle('input-error',   isError);
+            inputEl.classList.toggle('input-success', !isError && message === '');
+            msgEl.textContent = message;
+            msgEl.className   = 'auth-field-msg ' + (isError ? 'err' : 'ok');
+        }
+
+        function showGlobalMsg(el, message, isError) {
+            el.textContent = message;
+            el.className   = 'auth-msg ' + (isError ? 'show-err' : 'show-ok');
+        }
+
+        /* ── Show/hide password toggles ───────────────────────────── */
+        function makeToggle(btnId, inputId) {
+            const btn   = document.getElementById(btnId);
+            const input = document.getElementById(inputId);
+            btn.addEventListener('click', function () {
+                const hidden = input.type === 'password';
+                input.type        = hidden ? 'text' : 'password';
+                this.textContent  = hidden ? '🙈' : '👁';
+                this.setAttribute('aria-label', hidden ? 'Hide password' : 'Show password');
+            });
+        }
+        makeToggle('regTogglePw',        'regPassword');
+        makeToggle('regToggleConfirmPw', 'regConfirmPassword');
+
+        /* ── Password strength meter ──────────────────────────────── */
+        const pwFill  = document.getElementById('pwStrengthFill');
+        const pwLabel = document.getElementById('pwStrengthLabel');
+
+        function updateStrength(pw) {
+            let score = 0;
+            if (pw.length >= 8)                                              score++;
+            if (/[A-Z]/.test(pw))                                            score++;
+            if (/[a-z]/.test(pw))                                            score++;
+            if (/[0-9]/.test(pw))                                            score++;
+            if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(pw))            score++;
+
+            const levels = [
+                { pct: '0%',   color: '#e0e9f8', label: '' },
+                { pct: '20%',  color: '#e53935', label: 'Very weak' },
+                { pct: '40%',  color: '#fb8c00', label: 'Weak' },
+                { pct: '60%',  color: '#f9a825', label: 'Fair' },
+                { pct: '80%',  color: '#43a047', label: 'Strong' },
+                { pct: '100%', color: '#1b7c3e', label: 'Very strong ✓' },
+            ];
+            const lvl = levels[score] || levels[0];
+            pwFill.style.width      = pw.length > 0 ? lvl.pct : '0%';
+            pwFill.style.background = lvl.color;
+            pwLabel.textContent     = pw.length > 0 ? lvl.label : '';
+            pwLabel.style.color     = lvl.color;
+        }
+
+        document.getElementById('regPassword').addEventListener('input', function () {
+            updateStrength(this.value);
+        });
+
+        /* ── Inline blur validation ───────────────────────────────── */
+        const fields = {
+            regName:            { el: null, msg: null },
+            regUsername:        { el: null, msg: null },
+            regEmail:           { el: null, msg: null },
+            regCourse:          { el: null, msg: null },
+            regPassword:        { el: null, msg: null },
+            regConfirmPassword: { el: null, msg: null },
+        };
+        Object.keys(fields).forEach(id => {
+            fields[id].el  = document.getElementById(id);
+            fields[id].msg = document.getElementById(id + 'Msg');
+        });
+
+        fields.regName.el.addEventListener('blur', function () {
+            if (this.value.trim().length < 2)
+                setFieldState(this, fields.regName.msg, 'Full name must be at least 2 characters.', true);
+            else
+                setFieldState(this, fields.regName.msg, '', false);
+        });
+
+        fields.regUsername.el.addEventListener('blur', function () {
+            const v = this.value.trim();
+            if (v.length < 3)
+                setFieldState(this, fields.regUsername.msg, 'Username must be at least 3 characters.', true);
+            else if (/\s/.test(v))
+                setFieldState(this, fields.regUsername.msg, 'Username cannot contain spaces.', true);
+            else
+                setFieldState(this, fields.regUsername.msg, '', false);
+        });
+
+        fields.regEmail.el.addEventListener('blur', function () {
+            if (!validateEmail(this.value.trim()))
+                setFieldState(this, fields.regEmail.msg, 'Please enter a valid email address.', true);
+            else
+                setFieldState(this, fields.regEmail.msg, '', false);
+        });
+
+        fields.regCourse.el.addEventListener('blur', function () {
+            if (!this.value)
+                setFieldState(this, fields.regCourse.msg, 'Please select your course.', true);
+            else
+                setFieldState(this, fields.regCourse.msg, '', false);
+        });
+
+        fields.regPassword.el.addEventListener('blur', function () {
+            if (!validatePasswordStrong(this.value))
+                setFieldState(this, fields.regPassword.msg,
+                    'Password needs 8+ chars, uppercase, lowercase, number & special character.', true);
+            else
+                setFieldState(this, fields.regPassword.msg, '', false);
+        });
+
+        fields.regConfirmPassword.el.addEventListener('blur', function () {
+            if (this.value !== fields.regPassword.el.value)
+                setFieldState(this, fields.regConfirmPassword.msg, 'Passwords do not match.', true);
+            else if (this.value === '')
+                setFieldState(this, fields.regConfirmPassword.msg, 'Please confirm your password.', true);
+            else
+                setFieldState(this, fields.regConfirmPassword.msg, '', false);
+        });
+
+        /* ── Form submit ──────────────────────────────────────────── */
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const globalMsg = document.getElementById('regGlobalMsg');
+            let valid = true;
+
+            // Name
+            const nameVal = fields.regName.el.value.trim();
+            if (nameVal.length < 2) {
+                setFieldState(fields.regName.el, fields.regName.msg, 'Full name must be at least 2 characters.', true);
+                valid = false;
+            } else {
+                setFieldState(fields.regName.el, fields.regName.msg, '', false);
+            }
+
+            // Username
+            const usernameVal = fields.regUsername.el.value.trim();
+            if (usernameVal.length < 3) {
+                setFieldState(fields.regUsername.el, fields.regUsername.msg, 'Username must be at least 3 characters.', true);
+                valid = false;
+            } else if (/\s/.test(usernameVal)) {
+                setFieldState(fields.regUsername.el, fields.regUsername.msg, 'Username cannot contain spaces.', true);
+                valid = false;
+            } else {
+                setFieldState(fields.regUsername.el, fields.regUsername.msg, '', false);
+            }
+
+            // Email
+            const emailVal = fields.regEmail.el.value.trim();
+            if (!validateEmail(emailVal)) {
+                setFieldState(fields.regEmail.el, fields.regEmail.msg, 'Please enter a valid email address.', true);
+                valid = false;
+            } else {
+                setFieldState(fields.regEmail.el, fields.regEmail.msg, '', false);
+            }
+
+            // Course
+            if (!fields.regCourse.el.value) {
+                setFieldState(fields.regCourse.el, fields.regCourse.msg, 'Please select your course.', true);
+                valid = false;
+            } else {
+                setFieldState(fields.regCourse.el, fields.regCourse.msg, '', false);
+            }
+
+            // Password
+            const pwVal = fields.regPassword.el.value;
+            if (!validatePasswordStrong(pwVal)) {
+                setFieldState(fields.regPassword.el, fields.regPassword.msg,
+                    'Password needs 8+ chars, uppercase, lowercase, number & special character.', true);
+                valid = false;
+            } else {
+                setFieldState(fields.regPassword.el, fields.regPassword.msg, '', false);
+            }
+
+            // Confirm password
+            const confirmVal = fields.regConfirmPassword.el.value;
+            if (confirmVal === '') {
+                setFieldState(fields.regConfirmPassword.el, fields.regConfirmPassword.msg, 'Please confirm your password.', true);
+                valid = false;
+            } else if (confirmVal !== pwVal) {
+                setFieldState(fields.regConfirmPassword.el, fields.regConfirmPassword.msg, 'Passwords do not match.', true);
+                valid = false;
+            } else {
+                setFieldState(fields.regConfirmPassword.el, fields.regConfirmPassword.msg, '', false);
+            }
+
+            if (!valid) {
+                showGlobalMsg(globalMsg, '⚠ Please fix the errors above and try again.', true);
+                return;
+            }
+
+            /* Simulate registration success */
+            const btn = document.getElementById('regSubmitBtn');
+            btn.textContent = 'Creating account…';
+            btn.disabled    = true;
+
+            setTimeout(function () {
+                showGlobalMsg(globalMsg,
+                    '✓ Account created successfully! Redirecting to login…', false);
+                setTimeout(function () {
+                    window.location.href = 'login.html';
+                }, 1600);
+            }, 900);
+        });
+    </script>
+
+</body>
+</html>

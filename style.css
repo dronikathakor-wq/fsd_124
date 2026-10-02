@@ -1,0 +1,515 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* Body */
+body{
+    background:#eef4ff;
+    color:#333;
+}
+
+/* Header */
+header{
+    background:linear-gradient(135deg,#003366,#0066cc);
+    color:white;
+    text-align:center;
+    padding:40px 20px;
+}
+
+header h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+header p{
+    font-size:20px;
+    letter-spacing:2px;
+}
+
+/* Navigation */
+nav{
+    background:#004080;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    padding:15px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:10px 20px;
+    font-size:18px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#FFD700;
+}
+
+/* Sections */
+section{
+    width:85%;
+    margin:35px auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+}
+
+section h2{
+    color:#003366;
+    margin-bottom:15px;
+    border-left:6px solid #0066cc;
+    padding-left:12px;
+}
+
+section p{
+    font-size:18px;
+    line-height:1.8;
+}
+
+/* Courses */
+ul{
+    margin-left:30px;
+    margin-top:15px;
+}
+
+ul li{
+    margin-bottom:12px;
+    font-size:18px;
+}
+
+/* Button */
+button{
+    margin-top:20px;
+    padding:12px 30px;
+    background:#0066cc;
+    color:white;
+    border:none;
+    border-radius:30px;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#003366;
+    transform:scale(1.05);
+}
+
+/* Contact */
+#contact p{
+    margin:10px 0;
+}
+
+/* Footer */
+footer{
+    background:#003366;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+    font-size:17px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+
+header h1{
+    font-size:28px;
+}
+
+nav{
+    flex-direction:column;
+    align-items:center;
+}
+
+nav a{
+    margin:10px;
+}
+
+section{
+    width:95%;
+    padding:20px;
+}
+
+section h2{
+    font-size:24px;
+}
+
+section p,
+ul li{
+    font-size:16px;
+}
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #333;
+}
+
+th {
+    background-color: #004080;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+/* Table Styling */
+table {
+    width: 90%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Table Heading */
+th {
+    background-color: #004080;
+    color: white;
+    padding: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Table Cells */
+td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Border */
+table,
+th,
+td {
+    border: 1px solid #ccc;
+}
+
+/* Alternate Row Color */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Hover Effect */
+tr:hover {
+    background-color: #d9ecff;
+    transition: 0.3s;
+}
+
+/* Table Caption */
+caption {
+    caption-side: top;
+    font-size: 24px;
+    font-weight: bold;
+    color: #004080;
+    margin-bottom: 10px;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    th,
+    td {
+        padding: 8px;
+    }
+}
+/* Page */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+/* Table */
+table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Table Header */
+th {
+    background-color: #0d6efd;
+    color: white;
+    padding: 14px;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+/* Table Data */
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+}
+
+/* Alternate Row Color */
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* Hover Effect */
+tr:hover {
+    background-color: #d6e4ff;
+    transition: 0.3s;
+}
+
+/* Last Row Border */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}/* Page */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+/* Table */
+table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Table Header */
+th {
+    background-color: #28857d;
+    color: white;
+    padding: 14px;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+/* Table Data */
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+}
+
+/* Alternate Row Color */
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* Hover Effect */
+tr:hover {
+    background-color: #d6ffff;
+    transition: 0.3s;
+}
+
+/* Last Row Border */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+/* Admission Section */
+#admission {
+    width: 80%;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f4f8fc;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Headings */
+#admission h2 {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 20px;
+    font-size: 32px;
+}
+
+#admission h3 {
+    color: #0056b3;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Paragraph */
+#admission p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Eligibility List */
+#admission ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+#admission ul li {
+    margin-bottom: 8px;
+    color: #444;
+}
+
+/* Form */
+#admission form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Labels */
+#admission label {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Input Fields */
+#admission input[type="text"],
+#admission input[type="email"],
+#admission input[type="tel"],
+#admission input[type="date"],
+#admission select,
+#admission input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+/* Radio Buttons */
+#admission input[type="radio"] {
+    margin-right: 5px;
+}
+
+#admission input[type="radio"] + label {
+    margin-right: 20px;
+}
+
+/* Buttons */
+#admission input[type="submit"],
+#admission input[type="reset"] {
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Submit Button */
+#admission input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+#admission input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Reset Button */
+#admission input[type="reset"] {
+    background-color: #dc3545;
+    color: white;
+}
+
+#admission input[type="reset"]:hover {
+    background-color: #b52a37;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #admission {
+        width: 95%;
+        padding: 20px;
+    }
+
+    #admission input[type="submit"],
+    #admission input[type="reset"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
